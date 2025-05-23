@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>📚 Documentação da API</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #fafafa;
+    }
+    header {
+      background-color: #24292F;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .redoc-container {
+      height: calc(100vh - 80px); /* 100% da tela menos o header */
+      background-color: #fff;
+    }
+    #redoc-container {
+      height: 100%;
+    }
+    .swagger-ui .topbar {
+      display: none !important;
+    }
+    .swagger-ui .info {
+      font-size: 18px;
+    }
+    .swagger-ui .paths-wrapper {
+      background-color: #ffffff;
+      border: 1px solid #dcdcdc;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  🚀 Bem-vindo à Documentação da API!
+</header>
+
+<div id="redoc-container" class="redoc-container"></div>
+
+<script>
+  Redoc.init('https://raw.githubusercontent.com/LucasEdu07/testes-doc-swagger/main/swagger.json', {
+    scrollYOffset: 'header',
+    hideDownloadButton: false,
+    hideHostname: true,
+    expandResponses: "200,201",
+    theme: {
+      colors: {
+        primary: {
+          main: '#24292F', /* Cor próxima do Swagger original */
+        },
+        success: {
+          main: '#28a745', /* Cor para sucesso */
+        },
+        text: {
+          primary: '#333', /* Cor de texto primária */
+          secondary: '#6c757d', /* Cor de texto secundária */
+        },
+        background: {
+          default: '#f7f7f7', /* Cor de fundo mais suave */
+        }
+      },
+      typography: {
+        fontFamily: 'Roboto, Arial, sans-serif',
+        headings: {
+          fontFamily: 'Roboto, Arial, sans-serif',
+          fontWeight: 'bold',
+        },
+        code: {
+          fontFamily: 'monospace', /* Fonte de código */
+        }
+      },
+      sidebar: {
+        backgroundColor: '#ffffff',
+        textColor: '#333',
+        hoverColor: '#f1f1f1',
+        width: '240px',
+        widthExpanded: '300px',
+      }
+    }
+  }, document.getElementById('redoc-container'));
+</script>
+
+</body>
+</html>
