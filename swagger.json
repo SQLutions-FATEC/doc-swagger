@@ -524,7 +524,6 @@
                 "$ref": "#/components/schemas/EmployeeDTO"
               }
             }
-          }
           },
           "required": true
         },
@@ -1022,7 +1021,8 @@
           }
         }
       }
-    },
+    }
+  },
 "components": {
     "schemas": {
       "EmployeeDTO": {
