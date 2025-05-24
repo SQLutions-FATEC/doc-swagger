@@ -176,6 +176,7 @@
           "Companies"
         ],
         "summary": "Endpoint para buscar empresa pelo ID",
+        "description": "Este endpoint faz uma filtragem e lista as empresas atráves do ID",
         "operationId": "getCompanyById",
         "parameters": [
           {
@@ -206,6 +207,7 @@
           "Companies"
         ],
         "summary": "Endpoint para atualizar empresa existente",
+        "description": "Este endpoint atualiza os dados de uma empresa cadastrada através de seu ID",
         "operationId": "updateCompany",
         "parameters": [
           {
@@ -246,6 +248,7 @@
           "Companies"
         ],
         "summary": "Endpoint para deletar empresa",
+        "description": "Este endpoint deleta todos os dados de uma empresa cadastrada",
         "operationId": "deleteCompany",
         "parameters": [
           {
@@ -518,6 +521,7 @@
                 "$ref": "#/components/schemas/EmployeeDTO"
               }
             }
+          }
           },
           "required": true
         },
@@ -571,6 +575,7 @@
           "Companies"
         ],
         "summary": "Endpoint para listar todas as empresas",
+        "description": "Este endpoint lista todos as empresas cadastradas no sistema através do ID",
         "operationId": "getAllCompanies",
         "responses": {
           "200": {
@@ -593,6 +598,7 @@
           "Companies"
         ],
         "summary": "Endpoint para criar nova empresa",
+        "description": "Este endpoint cria um novo registro de empresa através dos dados fornecidos. Os campos incluem ID, nome, CNPJ e nome social",
         "operationId": "createCompany",
         "requestBody": {
           "content": {
@@ -1013,9 +1019,8 @@
           }
         }
       }
-    }
-  },
-  "components": {
+    },
+"components": {
     "schemas": {
       "EmployeeDTO": {
         "type": "object",
