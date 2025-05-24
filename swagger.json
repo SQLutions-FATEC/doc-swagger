@@ -39,6 +39,7 @@
           "Employees"
         ],
         "summary": "Endpoint para buscar funcionário pelo ID",
+        "description": "Este endpoint faz uma filtragem e lista os funcionários atráves do ID",
         "operationId": "getEmployeeById",
         "parameters": [
           {
@@ -69,6 +70,7 @@
           "Employees"
         ],
         "summary": "Endpoint para atualizar funcionario existente",
+        "description": "Este endpoint atualiza os dados de um funcionário cadastrado através de seu ID",
         "operationId": "updateEmployee",
         "parameters": [
           {
@@ -484,6 +486,7 @@
           "Employees"
         ],
         "summary": "Endpoint para buscar todos os funcionários",
+        "description": "Este endpoint lista todos os funcionários cadastrados no sistema através do ID",
         "operationId": "listarFuncionarios",
         "responses": {
           "200": {
@@ -506,6 +509,7 @@
           "Employees"
         ],
         "summary": "Endpoint para criar funcionário",
+        "description": "Este endpoint cria um novo registro de funcionário através dos dados fornecidos. Os campos incluem ID, nome, número de registro, data de nascimento, gênero e tipo sanguíneo",
         "operationId": "createEmployee",
         "requestBody": {
           "content": {
