@@ -634,6 +634,7 @@
           "Clock ins"
         ],
         "summary": "Endpoint para criar uma nova movimentação",
+        "description": "Este endpoint cria uma nova movimentação (registro de ponto) com horário de entrada e saída.",
         "operationId": "createMovimentacao",
         "requestBody": {
           "content": {
