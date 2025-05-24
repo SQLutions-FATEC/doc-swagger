@@ -274,6 +274,7 @@
           "Clock ins"
         ],
         "summary": "Endpoint para buscar uma movimentação pelo ID",
+        "description": "Este endpoint lista os horários de entradas e de saídas atráves do ID do funcionário",
         "operationId": "getMovimentacaoById",
         "parameters": [
           {
@@ -304,6 +305,7 @@
           "Clock ins"
         ],
         "summary": "Endpoint para atualizar uma movimentação",
+        "description": "Este endpoint atualiza o horário de entrada ou de saída atráves do ID do funcionário",
         "operationId": "updateMovimentacao",
         "parameters": [
           {
@@ -344,6 +346,7 @@
           "Clock ins"
         ],
         "summary": "Endpoint para excluir uma movimentação",
+        "description": "Este endpoint deleta os horários de entradas ou de saídas de um funcionário cadastrado",
         "operationId": "deleteMovimentacao",
         "parameters": [
           {
