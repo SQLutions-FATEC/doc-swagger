@@ -897,7 +897,7 @@
           "Clock ins"
         ],
         "summary": "Endpoint para obter todas as movimentações ou pesquisar com filtros",
-        "description": "",
+        "description": "Este endpoint retorna uma lista paginada de movimentações (registros de ponto), podendo aplicar filtros por funcionário, empresa, função, datas.",
         "operationId": "searchMovimentacoes",
         "parameters": [
           {
