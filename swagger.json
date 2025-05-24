@@ -379,6 +379,7 @@
           "Roles"
         ],
         "summary": "Endpoint para buscar todos as funções",
+        "description": "Este endpoint retorna uma lista com todas as funções (cargos) cadastrados no sistema",
         "operationId": "getRoles",
         "responses": {
           "200": {
@@ -401,6 +402,7 @@
           "Roles"
         ],
         "summary": "Endpoint para criar função",
+        "description": "Esse endpoint cria uma nova função (cargo) no sistema a partir dos dados enviados no corpo da requisição",
         "operationId": "createRole",
         "requestBody": {
           "content": {
@@ -895,6 +897,7 @@
           "Clock ins"
         ],
         "summary": "Endpoint para obter todas as movimentações ou pesquisar com filtros",
+        "description": "",
         "operationId": "searchMovimentacoes",
         "parameters": [
           {
