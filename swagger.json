@@ -339,12 +339,14 @@
           "Clock ins"
         ],
         "summary": "Endpoint para buscar uma movimentação pelo ID",
+        "description": "Este endpoint retorna os dados de uma movimentação específica com base no ID informado.",
         "operationId": "getClockInById",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
+            "description": "ID da movimentação a ser buscada",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -353,14 +355,17 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Movimentação retornada com sucesso",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ClockInResponseDTO"
                 }
               }
             }
+          },
+          "404": {
+            "description": "Movimentação não encontrada"
           }
         }
       },
@@ -369,12 +374,14 @@
           "Clock ins"
         ],
         "summary": "Endpoint para atualizar uma movimentação",
+        "description": "Este endpoint atualiza os dados de uma movimentação já registrada com base no ID informado. Os dados atualizáveis incluem data e hora de entrada e saída.",
         "operationId": "updateClockIn",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
+            "description": "ID da movimentação a ser atualizada",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -393,14 +400,17 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Movimentação atualizada com sucesso",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ClockInResponseDTO"
                 }
               }
             }
+          },
+          "404": {
+            "description": "Movimentação não encontrada"
           }
         }
       },
@@ -409,12 +419,14 @@
           "Clock ins"
         ],
         "summary": "Endpoint para excluir uma movimentação",
+        "description": "Este endpoint remove uma movimentação registrada do sistema com base no ID informado. A exclusão é irreversível.",
         "operationId": "deleteClockIn",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
+            "description": "ID da movimentação a ser deletada",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -423,14 +435,17 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Movimentação deletada com sucesso",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ClockInResponseDTO"
                 }
               }
             }
+          },
+          "404": {
+            "description": "Movimentação não encontrada"
           }
         }
       }
@@ -765,27 +780,31 @@
           "Clock ins"
         ],
         "summary": "Endpoint para criar uma nova movimentação",
+        "description": "Este endpoint registra uma nova movimentação de entrada e saída de um funcionário, com base nos dados fornecidos como data e hora de entrada e saída.",
         "operationId": "createClockIn",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ClockInRequestDTO"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Movimentação criada com sucesso",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ClockInResponseDTO"
                 }
               }
             }
+          },
+          "400": {
+            "description": "Parâmetros inválidos ou campos obrigatórios ausentes"
           }
         }
       }
@@ -1035,12 +1054,14 @@
           "Clock ins"
         ],
         "summary": "Endpoint para obter todas as movimentações ou pesquisar com filtros",
+        "description": "Este endpoint retorna uma lista paginada de movimentações com base em filtros opcionais como nome do funcionário, empresa, função, intervalo de datas e carga horária. Também permite exportar os dados completos.",
         "operationId": "searchClockIns",
         "parameters": [
           {
             "name": "employee",
             "in": "query",
             "required": false,
+            "description": "Nome do funcionário",
             "schema": {
               "type": "string"
             }
@@ -1049,6 +1070,7 @@
             "name": "company",
             "in": "query",
             "required": false,
+            "description": "Nome da empresa",
             "schema": {
               "type": "string"
             }
@@ -1057,6 +1079,7 @@
             "name": "role",
             "in": "query",
             "required": false,
+            "description": "Nome da função",
             "schema": {
               "type": "string"
             }
@@ -1065,22 +1088,27 @@
             "name": "start_date",
             "in": "query",
             "required": false,
+            "description": "Data e hora de início (formato yyyy-MM-dd HH:mm:ss)",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             }
           },
           {
             "name": "end_date",
             "in": "query",
             "required": false,
+            "description": "Data e hora de término (formato yyyy-MM-dd HH:mm:ss)",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             }
           },
           {
             "name": "min_hours",
             "in": "query",
             "required": false,
+            "description": "Carga horária mínima",
             "schema": {
               "type": "number",
               "format": "double"
@@ -1090,6 +1118,7 @@
             "name": "max_hours",
             "in": "query",
             "required": false,
+            "description": "Carga horária máxima",
             "schema": {
               "type": "number",
               "format": "double"
@@ -1099,9 +1128,9 @@
             "name": "page",
             "in": "query",
             "required": false,
+            "description": "Número da página (padrão: 0)",
             "schema": {
               "type": "integer",
-              "format": "int32",
               "default": 0
             }
           },
@@ -1109,9 +1138,9 @@
             "name": "size",
             "in": "query",
             "required": false,
+            "description": "Tamanho da página (padrão: 10)",
             "schema": {
               "type": "integer",
-              "format": "int32",
               "default": 10
             }
           },
@@ -1119,6 +1148,7 @@
             "name": "export",
             "in": "query",
             "required": false,
+            "description": "Se verdadeiro, exporta os dados completos sem paginação",
             "schema": {
               "type": "boolean",
               "default": false
@@ -1127,14 +1157,27 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Lista de movimentações retornada com sucesso",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "object"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ClockInResponseDTO"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ClockInResponseDTO"
+                      }
+                    }
+                  ]
                 }
               }
             }
+          },
+          "400": {
+            "description": "Parâmetros inválidos ou formato de data incorreto"
           }
         }
       }
