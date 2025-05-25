@@ -1145,12 +1145,14 @@
           "analytics-controller"
         ],
         "summary": "Endpoint para obter dados analíticos de uma empresa em um intervalo de datas",
+        "description": "Este endpoint retorna dados analíticos consolidados para uma empresa específica com base em um intervalo de datas. Os dados podem incluir métricas de presença, registros de ponto e outras informações relacionadas à atividade dos funcionários.",
         "operationId": "getAnalytics",
         "parameters": [
           {
             "name": "companyId",
             "in": "query",
             "required": true,
+            "description": "ID da empresa para a qual os dados analíticos serão gerados",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -1160,29 +1162,39 @@
             "name": "start_date",
             "in": "query",
             "required": true,
+            "description": "Data de início do período (formato yyyy-MM-dd)",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date"
             }
           },
           {
             "name": "end_date",
             "in": "query",
             "required": true,
+            "description": "Data de término do período (formato yyyy-MM-dd)",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Dados analíticos retornados com sucesso",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AnalyticsDTO"
                 }
               }
             }
+          },
+          "400": {
+            "description": "Parâmetros inválidos ou mal formatados"
+          },
+          "404": {
+            "description": "Empresa não encontrada"
           }
         }
       }
