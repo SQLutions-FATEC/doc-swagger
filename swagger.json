@@ -440,13 +440,14 @@
         "tags": [
           "Roles"
         ],
-        "summary": "Endpoint para buscar todos as funções",
+        "summary": "Endpoint para buscar todas as funções",
+        "description": "Este endpoint retorna uma lista com todas as funções (cargos) cadastradas no sistema.",
         "operationId": "getRoles",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Lista de funções retornada com sucesso",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
@@ -463,6 +464,7 @@
           "Roles"
         ],
         "summary": "Endpoint para criar função",
+        "description": "Este endpoint cria uma nova função (cargo) no sistema com base nos dados fornecidos. Os dados incluem o nome da função e outras informações relevantes.",
         "operationId": "createRole",
         "requestBody": {
           "content": {
@@ -476,14 +478,17 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Função criada com sucesso",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/RoleDTO"
                 }
               }
             }
+          },
+          "400": {
+            "description": "Dados inválidos fornecidos para criação"
           }
         }
       }
