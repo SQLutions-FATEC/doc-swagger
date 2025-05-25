@@ -145,12 +145,14 @@
           "Contracts"
         ],
         "summary": "Endpoint para atualizar um contrato",
+        "description": "Atualiza os dados de um contrato existente com base no ID informado.",
         "operationId": "updateContract",
         "parameters": [
           {
             "name": "contractId",
             "in": "path",
             "required": true,
+            "description": "ID do contrato a ser atualizado",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -169,7 +171,7 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Contrato atualizado com sucesso",
             "content": {
               "*/*": {
                 "schema": {
@@ -177,6 +179,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Contrato não encontrado"
           }
         }
       },
@@ -185,12 +190,14 @@
           "Contracts"
         ],
         "summary": "Endpoint para excluir um contrato",
+        "description": "Remove permanentemente um contrato com base no ID informado.",
         "operationId": "deleteContract",
         "parameters": [
           {
             "name": "contractId",
             "in": "path",
             "required": true,
+            "description": "ID do contrato a ser excluído",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -199,7 +206,10 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Contrato excluído com sucesso (sem conteúdo)"
+          },
+          "404": {
+            "description": "Contrato não encontrado"
           }
         }
       }
@@ -210,12 +220,14 @@
           "Contracts"
         ],
         "summary": "Endpoint para inativar um contrato",
+        "description": "Marca um contrato como inativo com base no ID fornecido, sem removê-lo do sistema.",
         "operationId": "inactivateContract",
         "parameters": [
           {
             "name": "contractId",
             "in": "path",
             "required": true,
+            "description": "ID do contrato a ser inativado",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -224,7 +236,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Contrato inativado com sucesso",
             "content": {
               "*/*": {
                 "schema": {
@@ -232,6 +244,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Contrato não encontrado"
           }
         }
       }
@@ -674,27 +689,31 @@
           "Contracts"
         ],
         "summary": "Endpoint para criar um novo contrato",
+        "description": "Cria um novo contrato associando funcionário, empresa, cargo e período de vigência.",
         "operationId": "createContract",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ContractRequestDTO"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Contrato criado com sucesso",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ContractResponseDTO"
                 }
               }
             }
+          },
+          "400": {
+            "description": "Dados inválidos ou contrato em conflito"
           }
         }
       }
@@ -1014,12 +1033,14 @@
           "Contracts"
         ],
         "summary": "Endpoint para buscar contratos por funcionário",
+        "description": "Retorna todos os contratos vinculados a um funcionário específico.",
         "operationId": "getContractsByEmployee",
         "parameters": [
           {
             "name": "employeeId",
             "in": "path",
             "required": true,
+            "description": "ID do funcionário",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -1028,9 +1049,9 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Contratos encontrados com sucesso",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
@@ -1039,6 +1060,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Funcionário não encontrado"
           }
         }
       }
@@ -1049,12 +1073,14 @@
           "Contracts"
         ],
         "summary": "Endpoint para buscar contratos por empresa",
+        "description": "Retorna todos os contratos associados a uma empresa específica.",
         "operationId": "getContractsByCompany",
         "parameters": [
           {
             "name": "companyId",
             "in": "path",
             "required": true,
+            "description": "ID da empresa",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -1063,9 +1089,9 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Contratos encontrados com sucesso",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
@@ -1074,6 +1100,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Empresa não encontrada"
           }
         }
       }
