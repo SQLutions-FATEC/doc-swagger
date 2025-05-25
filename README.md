@@ -1,53 +1,68 @@
-# 📚 Documentação da API - Sistema de Ponto e Geração de Relatórios
+# 📘 Documentação Swagger - API 3º Semestre
 
-![sqlutions logo](https://github.com/user-attachments/assets/4884e8b3-b59a-45ba-ad13-13faa8d4d9b3)
+Este repositório contém a documentação dos endpoints da API desenvolvida pela equipe SQLutions no 3º semestre.
 
-Este repositório contém a **documentação da API REST** do projeto _**Sistema de Ponto e Geração de Relatórios**_, desenvolvido pela equipe **SQLutions**, do curso Banco de Dados - 3º semestre da Fatec São José dos Campos.
+## 🔗 Acesso à Documentação
 
----
+Após executar o backend, acesse:
 
-## 📌 Sobre o projeto
-
-O sistema foi desenvolvido para atender a demanda da empresa **Altave**, que necessita acompanhar e fiscalizar o cumprimento de jornada dos funcionários terceirizados que atuam em navios durante processos de manutenção.
-
-A API tem como objetivo possibilitar o registro de **movimentações (entrada e saída)** dos funcionários, assim como **cadastro de empresas, contratos, funções**, e permitir a **visualização, edição e exportação de dados** para relatórios gerenciais.
+**[http://localhost:8080/api/swagger-ui/index.html](http://localhost:8080/api/swagger-ui/index.html)**
 
 ---
 
-## 🔗 Acesse a documentação
+## 🚀 Como rodar a aplicação
 
-> A documentação da API pode ser acessada através do Swagger:
+Para que a documentação do Swagger funcione corretamente, é necessário subir o backend. Abaixo estão os passos principais, mas recomendamos verificar os repositórios principais para instruções completas:
 
-📎 **Swagger UI:**  
-[http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+### 🔧 Backend
+
+Repositório: [API-3-Semestre-Backend](https://github.com/SQLutions-FATEC/API-3-Semestre-Backend)
+
+#### Requisitos:
+
+- IntelliJ IDEA
+- Docker
+- Java 21 (preferencialmente Azul Zulu Community)
+- Git
+
+#### Passos rápidos:
+
+```bash
+git clone https://github.com/SQLutions-FATEC/API-3-Semestre-Backend.git
+cd API-3-Semestre-Backend
+```
+
+- Configure o Java 21 no IntelliJ (Project Structure > SDK)
+- Execute o Docker com o comando:
+
+```bash
+docker compose up -d
+```
+
+- Rode a aplicação pelo IntelliJ.
+- Acesse a documentação Swagger na [porta 8080](http://localhost:8080/api/swagger-ui/index.html)
+
+### 🌐 Frontend
+
+Repositório: [API-3-Semestre-Frontend](https://github.com/SQLutions-FATEC/API-3-Semestre-Frontend)
+
+Você pode executar o frontend em paralelo com o backend, especialmente para visualizar o consumo dos endpoints documentados.
+
+#### Passos rápidos:
+
+```bash
+git clone https://github.com/SQLutions-FATEC/API-3-Semestre-Frontend.git
+cd API-3-Semestre-Frontend
+npm install
+npm run dev
+```
 
 ---
 
-## 📦 Endpoints disponíveis
+## 📚 Sobre o Swagger
 
-Os principais recursos da API incluem:
+A documentação Swagger é baseada em anotações no código-fonte da API Java com Spring Boot. Ela permite:
 
-- `/api/employees` – Cadastro, edição e listagem de funcionários
-- `/api/companies` – Cadastro e gerenciamento de empresas
-- `/api/roles` – Cadastro e consulta de funções
-- `/api/contracts` – Gerenciamento de contratos com vigência
-- `/api/clockins` – Registro de pontos (entrada e saída)
-- `/api/reports` – Geração de relatórios filtrados e exportação para `.xlsx`
-
----
-
-## ⚙️ Tecnologias Utilizadas
-
-- **Java 17**
-- **Spring Boot**
-- **Spring Data JPA**
-- **PostgreSQL**
-- **Swagger (Springdoc OpenAPI 3)**
-
----
-
-## ▶️ Como rodar localmente
-
-1. Clone o projeto:
-   ```bash
-   git clone https://github.com/SQLutions-FATEC/API-3-Semestre.git
+- Visualizar todos os endpoints disponíveis
+- Ver os métodos HTTP, parâmetros e respostas esperadas
+- Testar os endpoints diretamente na interface
