@@ -242,12 +242,14 @@
           "Companies"
         ],
         "summary": "Endpoint para buscar empresa pelo ID",
+        "description": "Retorna os dados de uma empresa com base no ID informado.",
         "operationId": "getCompanyById",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
+            "description": "ID da empresa",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -256,14 +258,17 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Empresa encontrada com sucesso",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CompanyDTO"
                 }
               }
             }
+          },
+          "404": {
+            "description": "Empresa não encontrada"
           }
         }
       },
@@ -272,14 +277,14 @@
           "Companies"
         ],
         "summary": "Endpoint para atualizar empresa existente",
-        "description": "",
+        "description": "Atualiza os dados de uma empresa já existente com base no ID informado.",
         "operationId": "updateCompany",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "",
+            "description": "ID da empresa a ser atualizada",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -298,14 +303,17 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Empresa atualizada com sucesso",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CompanyDTO"
                 }
               }
             }
+          },
+          "404": {
+            "description": "Empresa não encontrada"
           }
         }
       },
@@ -314,12 +322,14 @@
           "Companies"
         ],
         "summary": "Endpoint para deletar empresa (soft delete)",
+        "description": "Remove logicamente uma empresa com base no ID informado. A empresa não é removida do banco, apenas marcada como inativa.",
         "operationId": "deleteCompany",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
+            "description": "ID da empresa a ser deletada",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -328,7 +338,10 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Empresa deletada com sucesso (sem conteúdo)"
+          },
+          "404": {
+            "description": "Empresa não encontrada"
           }
         }
       }
@@ -691,16 +704,17 @@
         "tags": [
           "Companies"
         ],
-        "summary": "Buscar empresas com filtros e paginação",
+        "summary": "Endpoint para buscar empresas com filtros e paginação",
+        "description": "Este endpoint retorna uma lista de empresas com suporte a filtros por nome, paginação e opção para buscar todas as empresas sem paginação.",
         "operationId": "getCompanies",
         "parameters": [
           {
             "name": "page",
             "in": "query",
             "required": false,
+            "description": "Número da página para paginação (padrão: 0)",
             "schema": {
               "type": "integer",
-              "format": "int32",
               "default": 0
             }
           },
@@ -708,9 +722,9 @@
             "name": "size",
             "in": "query",
             "required": false,
+            "description": "Quantidade de itens por página (padrão: 10)",
             "schema": {
               "type": "integer",
-              "format": "int32",
               "default": 10
             }
           },
@@ -718,6 +732,7 @@
             "name": "all",
             "in": "query",
             "required": false,
+            "description": "Se verdadeiro, retorna todas as empresas sem paginação",
             "schema": {
               "type": "boolean"
             }
@@ -726,6 +741,7 @@
             "name": "name",
             "in": "query",
             "required": false,
+            "description": "Filtro por nome da empresa (busca parcial, case-insensitive)",
             "schema": {
               "type": "string"
             }
@@ -733,11 +749,21 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Lista de empresas retornada com sucesso",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "object"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/CompanyDTO"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CompanyDTO"
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -749,20 +775,21 @@
           "Companies"
         ],
         "summary": "Endpoint para criar nova empresa",
+        "description": "Cria uma nova empresa no sistema com os dados informados.",
         "operationId": "createCompany",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CompanyDTO"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Empresa criada com sucesso",
             "content": {
               "*/*": {
                 "schema": {
@@ -770,6 +797,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Dados inválidos"
           }
         }
       }
