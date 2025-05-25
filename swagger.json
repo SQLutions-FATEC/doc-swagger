@@ -542,6 +542,7 @@
           "photo-controller"
         ],
         "summary": "Endpoint para fazer upload da foto de um funcionário",
+        "description": "Faz o upload de uma imagem associada ao ID de um funcionário.",
         "operationId": "uploadPhoto",
         "parameters": [
           {
@@ -864,12 +865,14 @@
           "photo-controller"
         ],
         "summary": "Endpoint para obter a foto do funcionário como recurso (uso em aplicações web)",
+        "description": "Retorna a imagem como um `Resource`, com cabeçalhos HTTP apropriados.",
         "operationId": "servePhotoAsResource",
         "parameters": [
           {
             "name": "employeeId",
             "in": "path",
             "required": true,
+            "description": "ID do funcionário",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -937,12 +940,14 @@
           "photo-controller"
         ],
         "summary": "Endpoint para obter a foto do funcionário em formato de bytes (uso em mobile e APIs)",
+        "description": "Retorna os bytes da imagem associada ao funcionário.",
         "operationId": "servePhotoBytes",
         "parameters": [
           {
             "name": "employeeId",
             "in": "path",
             "required": true,
+            "description": "ID do funcionário",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -1307,12 +1312,14 @@
           "photo-controller"
         ],
         "summary": "Endpoint para deletar a foto de um funcionário pelo ID",
+        "description": "Exclui a imagem do funcionário com base no seu ID.",
         "operationId": "deletePhoto",
         "parameters": [
           {
             "name": "employeeId",
             "in": "path",
             "required": true,
+            "description": "ID do funcionário",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -1323,22 +1330,16 @@
           "200": {
             "description": "Foto deletada com sucesso",
             "content": {
-              "*/*": {
+              "text/plain": {
                 "schema": {
-                  "type": "string"
+                  "type": "string",
+                  "example": "Foto deletada com sucesso"
                 }
               }
             }
           },
           "404": {
-            "description": "Foto não encontrada",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "Foto não encontrada"
           }
         }
       }
