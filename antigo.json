@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080/api",
+      "url": "http://localhost:8081/api",
       "description": "Generated server url"
     }
   ],
@@ -46,7 +46,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "ID do funcionário",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -55,17 +54,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Funcionário encontrado",
+            "description": "OK",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/EmployeeDTO"
                 }
               }
             }
-          },
-          "404": {
-            "description": "Funcionário não encontrado"
           }
         }
       },
@@ -88,53 +84,25 @@
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/EmployeeDTO"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
-            "description": "Funcionário atualizado com sucesso",
+            "description": "OK",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/EmployeeDTO"
                 }
               }
             }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Employees"
-        ],
-        "summary": "Endpoint para deletar funcionário",
-        "description": "Este endpoint remove um funcionário cadastrado do sistema com base no seu ID. A operação é irreversível e o funcionário será permanentemente excluído.",
-        "operationId": "deleteEmployee",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "ID do funcionário a ser deletado",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Funcionário deletado com sucesso"
-          },
-          "404": {
-            "description": "Funcionário não encontrado"
           }
         }
       }
@@ -144,7 +112,6 @@
         "tags": [
           "Contracts"
         ],
-        "summary": "Endpoint para atualizar um contrato",
         "operationId": "updateContract",
         "parameters": [
           {
@@ -184,7 +151,6 @@
         "tags": [
           "Contracts"
         ],
-        "summary": "Endpoint para excluir um contrato",
         "operationId": "deleteContract",
         "parameters": [
           {
@@ -204,44 +170,13 @@
         }
       }
     },
-    "/contracts/{contractId}/inactivate": {
-      "put": {
-        "tags": [
-          "Contracts"
-        ],
-        "summary": "Endpoint para inativar um contrato",
-        "operationId": "inactivateContract",
-        "parameters": [
-          {
-            "name": "contractId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ContractResponseDTO"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/company/{id}": {
       "get": {
         "tags": [
           "Companies"
         ],
         "summary": "Endpoint para buscar empresa pelo ID",
+        "description": "Este endpoint faz uma filtragem e lista as empresas atráves do ID",
         "operationId": "getCompanyById",
         "parameters": [
           {
@@ -272,14 +207,13 @@
           "Companies"
         ],
         "summary": "Endpoint para atualizar empresa existente",
-        "description": "",
+        "description": "Este endpoint atualiza os dados de uma empresa cadastrada através de seu ID",
         "operationId": "updateCompany",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -313,7 +247,8 @@
         "tags": [
           "Companies"
         ],
-        "summary": "Endpoint para deletar empresa (soft delete)",
+        "summary": "Endpoint para deletar empresa",
+        "description": "Este endpoint deleta todos os dados de uma empresa cadastrada",
         "operationId": "deleteCompany",
         "parameters": [
           {
@@ -339,7 +274,8 @@
           "Clock ins"
         ],
         "summary": "Endpoint para buscar uma movimentação pelo ID",
-        "operationId": "getClockInById",
+        "description": "Este endpoint lista os horários de entradas e de saídas atráves do ID do funcionário",
+        "operationId": "getMovimentacaoById",
         "parameters": [
           {
             "name": "id",
@@ -369,7 +305,8 @@
           "Clock ins"
         ],
         "summary": "Endpoint para atualizar uma movimentação",
-        "operationId": "updateClockIn",
+        "description": "Este endpoint atualiza o horário de entrada ou de saída atráves do ID do funcionário",
+        "operationId": "updateMovimentacao",
         "parameters": [
           {
             "name": "id",
@@ -409,7 +346,8 @@
           "Clock ins"
         ],
         "summary": "Endpoint para excluir uma movimentação",
-        "operationId": "deleteClockIn",
+        "description": "Este endpoint deleta os horários de entradas ou de saídas de um funcionário cadastrado",
+        "operationId": "deleteMovimentacao",
         "parameters": [
           {
             "name": "id",
@@ -441,6 +379,7 @@
           "Roles"
         ],
         "summary": "Endpoint para buscar todos as funções",
+        "description": "Este endpoint retorna uma lista com todas as funções (cargos) cadastrados no sistema",
         "operationId": "getRoles",
         "responses": {
           "200": {
@@ -463,6 +402,7 @@
           "Roles"
         ],
         "summary": "Endpoint para criar função",
+        "description": "Esse endpoint cria uma nova função (cargo) no sistema a partir dos dados enviados no corpo da requisição",
         "operationId": "createRole",
         "requestBody": {
           "content": {
@@ -493,7 +433,7 @@
         "tags": [
           "photo-controller"
         ],
-        "summary": "Endpoint para fazer upload da foto de um funcionário",
+        "summary": "Upload de foto do funcionário",
         "operationId": "uploadPhoto",
         "parameters": [
           {
@@ -553,51 +493,19 @@
         "tags": [
           "Employees"
         ],
-        "summary": "Endpoint para listar funcionários com ou sem paginação",
-        "description": "Este endpoint retorna uma lista de funcionários. Se os parâmetros `page` e `size` forem fornecidos, a resposta será paginada. Também é possível realizar um filtro opcional pelo nome do funcionário através do parâmetro `name`, que aceita buscas parciais e sem distinção entre maiúsculas e minúsculas. Caso não seja usada paginação, todos os funcionários serão retornados em uma lista simples.",
-        "operationId": "getEmployees",
-        "parameters": [
-          {
-            "name": "page",
-            "in": "query",
-            "required": false,
-            "description": "Número da página (inicia em 0)",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "required": false,
-            "description": "Quantidade de itens por página",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": false,
-            "description": "Filtro parcial por nome do funcionário (case-insensitive)",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "summary": "Endpoint para buscar todos os funcionários",
+        "description": "Este endpoint lista todos os funcionários cadastrados no sistema através do ID",
+        "operationId": "listarFuncionarios",
         "responses": {
           "200": {
-            "description": "Lista de funcionários retornada com sucesso",
+            "description": "OK",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
-                  "oneOf": [
-                    { "$ref": "#/components/schemas/EmployeeResponseDTO" },
-                    {
-                      "type": "array",
-                      "items": { "$ref": "#/components/schemas/EmployeeDTO" }
-                    }
-                  ]
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeDTO"
+                  }
                 }
               }
             }
@@ -609,7 +517,7 @@
           "Employees"
         ],
         "summary": "Endpoint para criar funcionário",
-        "description": "Este endpoint cria um novo registro de funcionário através dos dados fornecidos. Os campos esperados no corpo da requisição incluem nome completo, número de registro (matrícula), data de nascimento, gênero e tipo sanguíneo.",
+        "description": "Este endpoint cria um novo registro de funcionário através dos dados fornecidos. Os campos incluem ID, nome, número de registro, data de nascimento, gênero e tipo sanguíneo",
         "operationId": "createEmployee",
         "requestBody": {
           "content": {
@@ -623,7 +531,7 @@
         },
         "responses": {
           "200": {
-            "description": "Funcionário criado com sucesso",
+            "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
@@ -640,7 +548,6 @@
         "tags": [
           "Contracts"
         ],
-        "summary": "Endpoint para criar um novo contrato",
         "operationId": "createContract",
         "requestBody": {
           "content": {
@@ -671,53 +578,19 @@
         "tags": [
           "Companies"
         ],
-        "summary": "Buscar empresas com filtros e paginação",
-        "operationId": "getCompanies",
-        "parameters": [
-          {
-            "name": "page",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "default": 0
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "default": 10
-            }
-          },
-          {
-            "name": "all",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "summary": "Endpoint para listar todas as empresas",
+        "description": "Este endpoint lista todos as empresas cadastradas no sistema através do ID",
+        "operationId": "getAllCompanies",
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "object"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyDTO"
+                  }
                 }
               }
             }
@@ -729,6 +602,7 @@
           "Companies"
         ],
         "summary": "Endpoint para criar nova empresa",
+        "description": "Este endpoint cria um novo registro de empresa através dos dados fornecidos. Os campos incluem ID, nome, CNPJ e nome social",
         "operationId": "createCompany",
         "requestBody": {
           "content": {
@@ -760,7 +634,8 @@
           "Clock ins"
         ],
         "summary": "Endpoint para criar uma nova movimentação",
-        "operationId": "createClockIn",
+        "description": "Este endpoint cria uma nova movimentação (registro de ponto) com horário de entrada e saída.",
+        "operationId": "createMovimentacao",
         "requestBody": {
           "content": {
             "application/json": {
@@ -790,7 +665,7 @@
         "tags": [
           "photo-controller"
         ],
-        "summary": "Endpoint para obter a foto do funcionário como recurso (uso em aplicações web)",
+        "summary": "Serve a imagem como Resource pelo ID do funcionário(Para WEB)",
         "operationId": "servePhotoAsResource",
         "parameters": [
           {
@@ -807,13 +682,13 @@
           "200": {
             "description": "Imagem retornada como Resource",
             "content": {
-              "image/png": {
+              "image/jpeg": {
                 "schema": {
                   "type": "string",
                   "format": "binary"
                 }
               },
-              "image/jpeg": {
+              "image/png": {
                 "schema": {
                   "type": "string",
                   "format": "binary"
@@ -824,13 +699,13 @@
           "404": {
             "description": "Foto não encontrada",
             "content": {
-              "image/png": {
+              "image/jpeg": {
                 "schema": {
                   "type": "string",
                   "format": "binary"
                 }
               },
-              "image/jpeg": {
+              "image/png": {
                 "schema": {
                   "type": "string",
                   "format": "binary"
@@ -841,13 +716,13 @@
           "500": {
             "description": "Erro ao carregar o arquivo",
             "content": {
-              "image/png": {
+              "image/jpeg": {
                 "schema": {
                   "type": "string",
                   "format": "binary"
                 }
               },
-              "image/jpeg": {
+              "image/png": {
                 "schema": {
                   "type": "string",
                   "format": "binary"
@@ -863,7 +738,7 @@
         "tags": [
           "photo-controller"
         ],
-        "summary": "Endpoint para obter a foto do funcionário em formato de bytes (uso em mobile e APIs)",
+        "summary": "Retorna a imagem como array de bytes pelo ID do funcionário(Para Mobile e consumo de API)",
         "operationId": "servePhotoBytes",
         "parameters": [
           {
@@ -880,16 +755,22 @@
           "404": {
             "description": "Foto não encontrada",
             "content": {
-              "image/png": {
-                "schema": {
-                  "type": "string",
-                  "format": "byte"
-                }
-              },
               "image/jpeg": {
                 "schema": {
-                  "type": "string",
-                  "format": "byte"
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "byte"
+                  }
+                }
+              },
+              "image/png": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "byte"
+                  }
                 }
               }
             }
@@ -897,16 +778,22 @@
           "200": {
             "description": "Imagem retornada com sucesso",
             "content": {
-              "image/png": {
-                "schema": {
-                  "type": "string",
-                  "format": "byte"
-                }
-              },
               "image/jpeg": {
                 "schema": {
-                  "type": "string",
-                  "format": "byte"
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "byte"
+                  }
+                }
+              },
+              "image/png": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "byte"
+                  }
                 }
               }
             }
@@ -914,39 +801,22 @@
           "500": {
             "description": "Erro ao ler os bytes da foto",
             "content": {
-              "image/png": {
-                "schema": {
-                  "type": "string",
-                  "format": "byte"
-                }
-              },
               "image/jpeg": {
                 "schema": {
-                  "type": "string",
-                  "format": "byte"
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "byte"
+                  }
                 }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/employee/active": {
-      "get": {
-        "tags": [
-          "Employees"
-        ],
-        "summary": "Endpoint para buscar os funcionários ativos",
-        "description": "Retorna todos os funcionários que estão com contrato ativo.",
-        "operationId": "getAllActiveEmployees",
-        "responses": {
-          "200": {
-            "description": "Lista de funcionários ativos",
-            "content": {
-              "application/json": {
+              },
+              "image/png": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/EmployeeDTO" }
+                  "items": {
+                    "type": "string",
+                    "format": "byte"
+                  }
                 }
               }
             }
@@ -959,7 +829,6 @@
         "tags": [
           "Contracts"
         ],
-        "summary": "Endpoint para buscar contratos por funcionário",
         "operationId": "getContractsByEmployee",
         "parameters": [
           {
@@ -994,7 +863,6 @@
         "tags": [
           "Contracts"
         ],
-        "summary": "Endpoint para buscar contratos por empresa",
         "operationId": "getContractsByCompany",
         "parameters": [
           {
@@ -1030,7 +898,8 @@
           "Clock ins"
         ],
         "summary": "Endpoint para obter todas as movimentações ou pesquisar com filtros",
-        "operationId": "searchClockIns",
+        "description": "Este endpoint retorna uma lista paginada de movimentações (registros de ponto), podendo aplicar filtros por funcionário, empresa, função, datas.",
+        "operationId": "searchMovimentacoes",
         "parameters": [
           {
             "name": "employee",
@@ -1073,21 +942,11 @@
             }
           },
           {
-            "name": "min_hours",
+            "name": "direction",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "max_hours",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "number",
-              "format": "double"
+              "type": "string"
             }
           },
           {
@@ -1109,15 +968,6 @@
               "format": "int32",
               "default": 10
             }
-          },
-          {
-            "name": "export",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
           }
         ],
         "responses": {
@@ -1134,60 +984,12 @@
         }
       }
     },
-    "/analytics": {
-      "get": {
-        "tags": [
-          "analytics-controller"
-        ],
-        "summary": "Endpoint para obter dados analíticos de uma empresa em um intervalo de datas",
-        "operationId": "getAnalytics",
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "start_date",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "end_date",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/AnalyticsDTO"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/photos/delete/employee/{employeeId}": {
       "delete": {
         "tags": [
           "photo-controller"
         ],
-        "summary": "Endpoint para deletar a foto de um funcionário pelo ID",
+        "summary": "Deleta a foto do funcionário pelo ID",
         "operationId": "deletePhoto",
         "parameters": [
           {
@@ -1225,7 +1027,7 @@
       }
     }
   },
-  "components": {
+"components": {
     "schemas": {
       "EmployeeDTO": {
         "type": "object",
@@ -1327,10 +1129,10 @@
       "ClockInRequestDTO": {
         "type": "object",
         "properties": {
-          "date_time_in": {
+          "date_time": {
             "type": "string"
           },
-          "date_time_out": {
+          "direction": {
             "type": "string"
           },
           "employee": {
@@ -1342,18 +1144,14 @@
       "ClockInResponseDTO": {
         "type": "object",
         "properties": {
-          "date_time_in": {
+          "date_time": {
             "type": "string"
           },
-          "date_time_out": {
+          "direction": {
             "type": "string"
           },
           "employee": {
             "$ref": "#/components/schemas/EmployeeResponseDTO"
-          },
-          "worked_hours": {
-            "type": "number",
-            "format": "double"
           }
         }
       },
@@ -1373,9 +1171,6 @@
           "sexo": {
             "type": "string"
           },
-          "registerNumber": {
-            "type": "string"
-          },
           "id_funcionario": {
             "type": "integer",
             "format": "int64"
@@ -1391,151 +1186,6 @@
           },
           "name": {
             "type": "string"
-          }
-        }
-      },
-      "AnalyticsDTO": {
-        "type": "object",
-        "properties": {
-          "company_id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "company_name": {
-            "type": "string"
-          },
-          "daily_registers": {
-            "$ref": "#/components/schemas/DailyRegisters"
-          },
-          "hours_worked_by_role": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/RoleHours"
-            }
-          },
-          "employee_count": {
-            "$ref": "#/components/schemas/EmployeeCount"
-          },
-          "expiring_contracts": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ExpiringContract"
-            }
-          },
-          "incomplete_clock_ins": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IncompleteClockIn"
-            }
-          },
-          "employees_by_period": {
-            "$ref": "#/components/schemas/EmployeesByShift"
-          }
-        }
-      },
-      "DailyRegisters": {
-        "type": "object",
-        "properties": {
-          "clock_in_with_in_count": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "clock_in_with_out_count": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "EmployeeCount": {
-        "type": "object",
-        "properties": {
-          "male_workers": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "female_workers": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "EmployeesByShift": {
-        "type": "object",
-        "properties": {
-          "midnight_to_morning": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "morning_to_afternoon": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "afternoon_to_night": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "ExpiringContract": {
-        "type": "object",
-        "properties": {
-          "contract_id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "register_number": {
-            "type": "string"
-          },
-          "employee_name": {
-            "type": "string"
-          },
-          "company_name": {
-            "type": "string"
-          },
-          "end_date": {
-            "type": "string",
-            "format": "date"
-          }
-        }
-      },
-      "IncompleteClockIn": {
-        "type": "object",
-        "properties": {
-          "clock_in_id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "register_number": {
-            "type": "string"
-          },
-          "employee_name": {
-            "type": "string"
-          },
-          "role_name": {
-            "type": "string"
-          },
-          "company_name": {
-            "type": "string"
-          },
-          "date_time_in": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "date_time_out": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "RoleHours": {
-        "type": "object",
-        "properties": {
-          "role_name": {
-            "type": "string"
-          },
-          "total_hours": {
-            "type": "number",
-            "format": "double"
           }
         }
       }
